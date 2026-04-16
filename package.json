@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy":  "gh-pages -d dist",
-    "dev":     "vite",
-    "build":   "vite build",
+    "deploy": "gh-pages -d dist",
+    "dev": "vite",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
@@ -27,6 +27,7 @@
     "@vitejs/plugin-react": "^6.0.1",
     "lucide-react": "^1.8.0",
     "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react-dom": "^19.2.5",
+    "swiper": "^12.1.3"
   }
 }
