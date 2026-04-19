@@ -1,41 +1,93 @@
 import React from 'react';
-import { Users, History, Award, BookUser, Presentation } from 'lucide-react';
+import { BookUser, Award, Presentation, PenTool, HeartPulse } from 'lucide-react';
+
+// IMPORTACIÓN DE FOTOS (Asegúrate de que estén en src/assets/images/)
 import fotoHistoria from '../assets/images/historia_local.jpg';
 import fotoJohana from '../assets/images/johana_quintana.jpg';
-import fotoElda from '../assets/images/Elda_Juarez.jpg';
 import fotoRene from '../assets/images/Rene_juaerez.jpg';
+import fotoTamara from '../assets/images/Tamara_Medina.jpg';
+import fotoReinaldo from '../assets/images/Reynaldo_ulloa.jpg';
+import fotoElda from '../assets/images/Elda_Juarez.jpg';
 
 const QuienesSomos = () => {
   const directiva = [
-    { nombre: 'Johana Quintana', cargo: 'Presidenta', foto: fotoJohana, icono: BookUser },
-    { nombre: 'Elda Juárez', cargo: 'Encargado de Cultura', foto: fotoElda, icono: Award },
-    { nombre: 'René Juárez', cargo: 'Tesorera ', foto: fotoRene, icono: Presentation }
+    { 
+      nombre: 'Johana Quintana', 
+      cargo: 'Presidenta', 
+      foto: fotoJohana, 
+      icono: BookUser 
+    },
+    { 
+      nombre: 'René Juárez', 
+      cargo: 'Tesorero', 
+      foto: fotoRene, 
+      icono: Presentation 
+    },
+    { 
+      nombre: 'Tamara Medina', 
+      cargo: 'Secretaria', 
+      foto: fotoTamara, 
+      icono: PenTool 
+    },
+    { 
+      nombre: 'Reinaldo Ulloa', 
+      cargo: 'Encargado de Cultura', 
+      foto: fotoReinaldo, 
+      icono: Award 
+    },
+    { 
+      nombre: 'Elda Juárez', 
+      cargo: 'Bienestar Social', 
+      foto: fotoElda, 
+      icono: HeartPulse 
+    }
   ];
 
   return (
     <section id="nosotros" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Historia con foto real */}
+        {/* Historia */}
         <div className="grid md:grid-cols-2 gap-12 items-center mb-24">
-          <img src={fotoHistoria} alt="Historia" className="rounded-3xl shadow-xl h-[400px] object-cover" />
+          <img 
+            src={fotoHistoria} 
+            alt="Historia MCACC" 
+            className="rounded-[40px] shadow-2xl h-[450px] w-full object-cover" 
+          />
           <div>
-            <h2 className="text-4xl font-black text-blue-900 mb-6 uppercase">Nuestra Historia</h2>
+            <h2 className="text-4xl font-black text-blue-900 mb-6 uppercase italic">Nuestra Historia</h2>
+            <p className="text-gray-600 text-lg leading-relaxed mb-6">
+              Fundada hace más de 20 años, la Manitoba Chilean Association (MCACC) es una organización sin fines de lucro 
+              que une a los chilenos en Winnipeg desde los años 70. 
+            </p>
             <p className="text-gray-600 text-lg leading-relaxed">
-              En el corazón del barrio Kildonan Norte, se encuentra nuestro hogar. En Main 1761, encontrarás un lugar de encuentro para todos los chilenos. Aquí vive la gran familia de Chile: la Manitoba Chilean Association., 
-              Fundada hace más de 20 años, esta asociación sin fines de lucro agrupa a diversas personas que llegaron a Winnipeg desde los años 70 hasta la fecha. Durante muchos años, la MCHA ha participado en diferentes actividades culturales y sociales, comprometida con la difusión de la cultura chilena.
-              Hoy en día, la organización está en un proceso de crecimiento, entendiendo que los tiempos cambian y hay diferentes necesidades para los recién llegados. Siempre se enfoca en ayudar a nuestros compatriotas que vienen llegando.
+              Hoy, nos enfocamos en el crecimiento y en apoyar a los nuevos compatriotas que llegan a la provincia, 
+              manteniendo siempre vivo el orgullo de nuestras raíces.
             </p>
           </div>
         </div>
 
-        {/* Tarjetas de la Directiva */}
-        <div className="grid md:grid-cols-3 gap-8">
+        {/* Título Directiva */}
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-black text-blue-900 uppercase italic">Nuestra Directiva</h2>
+          <div className="h-1 w-20 bg-red-600 mx-auto mt-2 rounded-full"></div>
+        </div>
+
+        {/* Tarjetas de la Directiva - Ajustado para que las 5 luzcan bien */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
           {directiva.map((miembro, i) => (
-            <div key={i} className="bg-gray-50 p-6 rounded-3xl text-center shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-              <img src={miembro.foto} alt={miembro.nombre} className="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-white shadow-md" />
-              <h3 className="text-xl font-bold text-blue-900">{miembro.nombre}</h3>
-              <p className="text-red-600 font-bold text-sm uppercase mb-3">{miembro.cargo}</p>
-              <miembro.icono className="mx-auto text-gray-400" size={24} />
+            <div key={i} className="bg-gray-50 p-6 rounded-[32px] text-center shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              <div className="relative mb-4 inline-block">
+                <img 
+                  src={miembro.foto} 
+                  alt={miembro.nombre} 
+                  className="w-28 h-28 rounded-full mx-auto object-cover border-4 border-white shadow-md" 
+                />
+                <div className="absolute -bottom-2 -right-2 bg-blue-900 text-white p-2 rounded-full shadow-lg">
+                  <miembro.icono size={14} />
+                </div>
+              </div>
+              <h3 className="text-lg font-bold text-blue-900 leading-tight mb-1">{miembro.nombre}</h3>
+              <p className="text-red-600 font-black text-[9px] uppercase tracking-widest">{miembro.cargo}</p>
             </div>
           ))}
         </div>
