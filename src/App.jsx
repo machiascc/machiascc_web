@@ -5,6 +5,7 @@ import Send from 'lucide-react/dist/esm/icons/send';
 import X from 'lucide-react/dist/esm/icons/x';
 import MapPin from 'lucide-react/dist/esm/icons/map-pin';
 import Mail from 'lucide-react/dist/esm/icons/mail';
+import Menu from 'lucide-react/dist/esm/icons/menu'; // <- Agregado para el menú móvil
 
 import emailjs from '@emailjs/browser';
 
@@ -13,7 +14,7 @@ import QuienesSomos from './components/QuienesSomos';
 import MisionVision from './components/MisionVision';
 import GaleriaActividades from './components/GaleriaActividades';
 import Mapa from './components/Mapa';
-import Folklore from './components/Folklore'; // Importamos el nuevo componente
+import Folklore from './components/Folklore';
 
 // ASSETS
 import logoMB from './assets/images/logo_MB.jpg';
@@ -21,6 +22,7 @@ import logoMB from './assets/images/logo_MB.jpg';
 const App = () => {
   const form = useRef();
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // <- Estado para controlar el menú en móviles
   const [indiceFoto, setIndiceFoto] = useState(1);
   const [idioma, setIdioma] = useState('es'); 
   const [inputMessage, setInputMessage] = useState("");
@@ -92,16 +94,37 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800 font-sans scroll-smooth">
+      
       {/* NAVBAR */}
-      <nav className="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100">
+      <nav className="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-[150] border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          
+          {/* LOGO */}
           <div className="flex items-center gap-3">
             <img src={logoMB} alt="Logo" className="w-10 h-10 rounded-full" />
             <div className='flex flex-col text-left font-bold text-blue-900'>
-                <span className="text-xl tracking-tighter leading-none">MCACC</span>
-                <span className="text-[8px] uppercase tracking-widest text-gray-400">Winnipeg</span>
+              <span className="text-xl tracking-tighter leading-none">MCACC</span>
+              <span className="text-[8px] uppercase tracking-widest text-gray-400">Winnipeg</span>
             </div>
           </div>
+
+          {/* BOTÓN HAMBURGUESA Y MUNDO (Solo se ve en móviles) */}
+          <div className="md:hidden flex items-center gap-4">
+            <button 
+              onClick={() => setIdioma(idioma === 'es' ? 'en' : 'es')}
+              className="text-blue-900 p-2 bg-slate-100 rounded-full"
+            >
+              <Globe size={18} />
+            </button>
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-blue-900"
+            >
+              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
+
+          {/* MENÚ ESCRITORIO (Se oculta en móviles) */}
           <div className="hidden md:flex gap-8 font-bold text-[10px] text-gray-500 uppercase tracking-widest">
             <a href="#inicio" className="hover:text-red-600 transition-colors">{t[idioma].nav.home}</a>
             <a href="#nosotros" className="hover:text-red-600 transition-colors">{t[idioma].nav.about}</a>
@@ -109,10 +132,23 @@ const App = () => {
             <a href="#gallery" className="hover:text-red-600 transition-colors">{t[idioma].nav.gallery}</a>
             <a href="#contacto" className="hover:text-red-600 transition-colors">{t[idioma].nav.contact}</a>
           </div>
-          <button onClick={() => setIdioma(idioma === 'es' ? 'en' : 'es')} className="bg-slate-100 text-blue-900 px-4 py-2 rounded-full font-bold text-[10px] uppercase tracking-widest hover:bg-blue-900 hover:text-white transition-all">
+
+          {/* BOTÓN IDIOMA ESCRITORIO (Se oculta en móviles) */}
+          <button onClick={() => setIdioma(idioma === 'es' ? 'en' : 'es')} className="hidden md:flex bg-slate-100 text-blue-900 px-4 py-2 rounded-full font-bold text-[10px] uppercase tracking-widest hover:bg-blue-900 hover:text-white transition-all items-center gap-2">
             <Globe size={14} /> {idioma === 'es' ? 'English' : 'Español'}
           </button>
         </div>
+
+        {/* MENÚ DESPLEGABLE MÓVIL (Solo se activa cuando isMenuOpen es true) */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-white border-t border-gray-100 flex flex-col p-6 gap-4 font-bold text-sm text-gray-600 uppercase tracking-widest animate-in slide-in-from-top duration-300">
+            <a href="#inicio" onClick={() => setIsMenuOpen(false)} className="hover:text-red-600">{t[idioma].nav.home}</a>
+            <a href="#nosotros" onClick={() => setIsMenuOpen(false)} className="hover:text-red-600">{t[idioma].nav.about}</a>
+            <a href="#folklore" onClick={() => setIsMenuOpen(false)} className="hover:text-red-600">{t[idioma].nav.folk}</a>
+            <a href="#gallery" onClick={() => setIsMenuOpen(false)} className="hover:text-red-600">{t[idioma].nav.gallery}</a>
+            <a href="#contacto" onClick={() => setIsMenuOpen(false)} className="hover:text-red-600">{t[idioma].nav.contact}</a>
+          </div>
+        )}
       </nav>
 
       {/* HERO */}
@@ -133,7 +169,6 @@ const App = () => {
       <div id="nosotros"><QuienesSomos /></div>
       <MisionVision />
       
-      {/* SECCIÓN FOLKLORE REEMPLAZADA POR EL NUEVO COMPONENTE */}
       <Folklore t={t[idioma]} />
 
       <div id="gallery"><GaleriaActividades /></div>
